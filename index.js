@@ -196,7 +196,7 @@ function receivedMessage(event) {
         console.log("message: "+messageText)
         console.log("good morning equality : "+(messageText=="good morning") )
         console.log("equality : "+(messageText=="hi"))
-        if (messageText=="hi"){
+        if (messageText=="hi","hey","hello"){
             greetUserText(senderID);
             return;
         }
@@ -208,8 +208,6 @@ function receivedMessage(event) {
             
             unknownUserText(senderID);
             
-            // let user=userMap.get(userId);
-            // sendTextMessage(userId, "sorry " + user.first_name + ', i do not know that!');
         }
     
     }
