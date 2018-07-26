@@ -188,7 +188,7 @@ function receivedMessage(event) {
         return;
     }
         else{
-        sendTextMessage(senderID, "Message received: " +messageText.substring(0, 200))
+        sendTextMessage(userId, "Message received: " +messageText.substring(0, 200))
     }
 }
 }
