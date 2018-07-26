@@ -125,6 +125,11 @@ function goodmorningUserText(userId) {
     sendTextMessage(userId, "Good Morning " + user.first_name + '!');
 }
 
+function unknownUserText(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "welcome" + user.first_name + '! ,Sorry i can not understand. Say that again!');
+}
+
 function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
 
