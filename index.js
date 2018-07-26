@@ -185,7 +185,10 @@ function receivedMessage(event) {
 	if (messageText=="hi","hello","hey") {
         greetUserText(senderID);
 		
-	}
+    }
+    else {
+        sendTextMessage(sender, "I can't understand you can you say it again!")
+    }
 }
 
 function greetUserText(userId) {
