@@ -194,22 +194,22 @@ function receivedMessage(event) {
 
 }
 
-function sendTextMessage(recipientId,messageText) {
-    var messageData = {
+function sendTextMessage(recipientId, text) {
+	var messageData = {
 		recipient: {
 			id: recipientId
 		},
 		message: {
 			text: text
-    	}
-    }
-    console.log("**************************in sentTextMessege***********************")
-        callSendAPI(messageData);
-
+		}
+	}
+	callSendAPI(messageData);
 }
+
+
 function callSendAPI(messageData) {
 	request({
-		url: 'https://graph.facebook.com/v2.6/me/messages',
+		uri: 'https://graph.facebook.com/v2.6/me/messages',
 		qs: {
 			access_token: config.FB_PAGE_TOKEN
 		},
@@ -229,9 +229,9 @@ function callSendAPI(messageData) {
 					recipientId);
 			}
 		} else {
-			console.error("Failed calling Send API.", response.statusCode, response.statusMessage, body.error);
+			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
 		}
-	});
+});
 }
 
 
