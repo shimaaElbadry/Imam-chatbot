@@ -202,7 +202,7 @@ function sendTextMessage(recipientId, text) {
 			text: text
     	}
     }
-    consol.log("**************************in sentTextMessege***********************")
+    console.log("**************************in sentTextMessege***********************")
         callSendAPI(messageData);
 
 }
