@@ -115,20 +115,6 @@ app.post('/webhook/', function (req, res) {
 	}
 });
 
-function greetUserText(userId) {
-	let user=userMap.get(userId);
-    sendTextMessage(userId, "welcome " + user.first_name + '!');
-}
-
-function goodmorningUserText(userId) {
-	let user=userMap.get(userId);
-    sendTextMessage(userId, "Good Morning " + user.first_name + '!');
-}
-
-function unknownUserText(userId) {
-	let user=userMap.get(userId);
-    sendTextMessage(userId, "welcome" + user.first_name + '! ,Sorry i can not understand. Say that again!');
-}
 
 function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
@@ -196,8 +182,9 @@ function receivedMessage(event) {
         console.log("message: "+messageText)
         console.log("good morning equality : "+(messageText=="good morning") )
         console.log("equality : "+(messageText=="hi"))
-        if (messageText=="hi"||messageText=="hello"||messageText=="hey"){
-            greetUserText(senderID);
+        if (messageText=="hi"||messageText=="hello"||messageText=="hey"||
+            messageText=="Hi"||messageText=="Hey"||messageText=="Hello"){
+            greetingwithQuickReply(senderID);
             return;
         }
         else if(messageText=="good morning"){
@@ -212,6 +199,48 @@ function receivedMessage(event) {
 
 }
 
+// function greetUserText(userId) {
+// 	let user=userMap.get(userId);
+//     sendTextMessage(userId, "welcome " + user.first_name + '!');
+function greetingwithQuickReply(sender) {
+    var messageData = {
+        recipient: {
+			id: recipientId},
+        message: { 
+                "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text":"Hi, Tell me more about your self.. you are?",
+                    "buttons":[
+                                    {
+                                    "type":"postback",
+                                    "title":"Muslim",
+                                    "payload":"Muslim"
+                                    },
+                                    {
+                                    "type":"postback",
+                                    "title":"non Muslim",
+                                    "payload":"non Muslim"
+                                    }
+                              ]
+                            }
+                        }
+                        }
+                    };
+        callSendAPI(messageData);         
+    }
+
+function goodmorningUserText(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "Good Morning " + user.first_name + '!');
+}
+
+function unknownUserText(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "welcome" + user.first_name + '! ,Sorry i can not understand. Say that again!');
+}
+
 function sendTextMessage(recipientId, text) {
 	var messageData = {
 		recipient: {
@@ -221,6 +250,21 @@ function sendTextMessage(recipientId, text) {
 			text: text
 		}
 	}
+	callSendAPI(messageData);
+}
+
+function sendQuickReply(recipientId, text, replies, metadata) {
+	var messageData = {
+		recipient: {
+			id: recipientId
+		},
+		message: {
+			text: text,
+			metadata: isDefined(metadata)?metadata:'',
+			quick_replies: replies
+		}
+	};
+
 	callSendAPI(messageData);
 }
 
@@ -509,7 +553,7 @@ function sendQuickReply(sender) {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                "text":"Hi, Tell me more about you self.. you are?",
+                "text":"Hi, Tell me more about your self.. you are?",
                 "buttons":[
                                 {
                                 "type":"postback",
