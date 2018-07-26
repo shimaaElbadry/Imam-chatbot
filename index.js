@@ -184,8 +184,7 @@ function receivedMessage(event) {
 
 	if (messageText) {
         if (messageText=="hi","hello","hey"){
-            sendTextMessage(userId, "Message received" )
-            //greetUserText(senderID);
+        greetUserText(senderID);
         
     }
         else{
@@ -201,7 +200,7 @@ function greetUserText(userId) {
     sendTextMessage(userId, "Welcome" + user.first_name + '!');
 }
 
-function sendTextMessage(recipientId, text) {
+function sendTextMessage(recipientId,messageText) {
     var messageData = {
 		recipient: {
 			id: recipientId
@@ -240,6 +239,9 @@ function callSendAPI(messageData) {
 		}
 	});
 }
+
+
+
 function handleEcho(messageId, appId, metadata) {
 	// Just logging message echoes to console
 	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
