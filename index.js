@@ -196,7 +196,7 @@ function receivedMessage(event) {
         console.log("message: "+messageText)
         console.log("good morning equality : "+(messageText=="good morning") )
         console.log("equality : "+(messageText=="hi"))
-        if (messageText=="hi"){
+        if (messageText=="hi"||"hello"){
             greetUserText(senderID);
             return;
         }
@@ -205,9 +205,7 @@ function receivedMessage(event) {
             return;
         }
         else {
-            
-            unknownUserText(senderID);
-            
+            unknownUserText(senderID); 
         }
     
     }
