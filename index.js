@@ -200,6 +200,7 @@ function receivedMessage(event) {
             return;
         }
         else {
+            let user=userMap.get(userId);
             sendTextMessage(userId, "Message received" );
         }
     
