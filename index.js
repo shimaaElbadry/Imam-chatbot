@@ -187,7 +187,7 @@ function receivedMessage(event) {
 		
     }
     else {
-        sendTextMessage(sender, "I can't understand you can you say it again!")
+        sendTextMessage(sender, "Message received: " + text.substring(0, 200))
     }
 }
 
