@@ -182,7 +182,7 @@ function receivedMessage(event) {
 	}
 
 
-	if (messageText=="hi") {
+	if (messageText=="hi","hello","hey") {
         greetUserText(senderID);
 		
 	}
