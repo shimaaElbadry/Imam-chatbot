@@ -184,11 +184,14 @@ function receivedMessage(event) {
         console.log("equality : "+(messageText=="hi"))
         if (messageText=="hi"||messageText=="hello"||messageText=="hey"||
             messageText=="Hi"||messageText=="Hey"||messageText=="Hello"){
-            greetingwithQuickReply(senderID);
+            
+            greetingText(senderID);
+            //greetingwithQuickReply(senderID);
             return;
         }
-        else if(messageText=="good morning"){
-            goodmorningUserText(senderID);
+        else if(messageText=="help"||messageText=="Help"||messageText=="معلومات"||
+        messageText=="مساعده"||messageText=="مساعدة"||messageText=="ماهو امام"){
+            helpUserText(senderID);
             return;
         }
         else {
@@ -206,7 +209,7 @@ function greetingwithQuickReply(sender) {
     var messageData = {
         recipient: {
 			id: recipientId},
-        message: { 
+            message: { 
                 "attachment": {
                 "type": "template",
                 "payload": {
@@ -254,15 +257,22 @@ function greetingwithQuickReply(sender) {
                 });        
     }
 
-function goodmorningUserText(userId) {
+function helpUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Good Morning " + user.first_name + '!');
+    sendTextMessage(userId, "Welcome" + user.first_name + '!' + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif");
 }
 
 function unknownUserText(userId) {
 	let user=userMap.get(userId);
     sendTextMessage(userId, "welcome" + user.first_name + '! ,Sorry i can not understand. Say that again!');
 }
+
+
+function greetingText(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "welcome" + user.first_name + '!');
+}
+
 
 function sendTextMessage(recipientId, text) {
 	var messageData = {
