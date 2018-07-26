@@ -201,8 +201,7 @@ function receivedMessage(event) {
             return;
         }
         else if(messageText=="good morning"){
-            let user=userMap.get(userId);
-            sendTextMessage(userId, "Good Morning " + user.first_name + '!');
+            goodmorningUserText(senderID);
             return;
         }
         else {
