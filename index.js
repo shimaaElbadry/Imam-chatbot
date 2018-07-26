@@ -116,8 +116,8 @@ app.post('/webhook/', function (req, res) {
 });
 
 function greetUserText(userId) {
-	
-    sendTextMessage(userId, "Welcome " );
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "welcome " + user.first_name + '!');
 }
 
 function goodmorningUserText(userId) {
@@ -201,7 +201,8 @@ function receivedMessage(event) {
         }
         else {
             
-            sendTextMessage(userId, "Message received" );
+            let user=userMap.get(userId);
+            sendTextMessage(userId, "sorry " + user.first_name + ', i do not know that!');
         }
     
     }
