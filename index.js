@@ -191,13 +191,7 @@ function receivedMessage(event) {
         sendTextMessage(userId, "Message received" )
     }
 }
-}
 
-
-
-function greetUserText(userId) {
-	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + user.first_name + '!');
 }
 
 function sendTextMessage(recipientId,messageText) {
