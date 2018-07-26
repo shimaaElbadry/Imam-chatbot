@@ -181,14 +181,19 @@ function receivedMessage(event) {
 		return;
 	}
 
+    if (event.message && event.message.text) {
+        
+        if (messageText === 'hi') {
+            console.log("in text if//////////////////*")
 
-	if (messageText=="hi","hello","hey") {
-        greetUserText(senderID);
-		
-    }
-    else {
+            greatingWithUserName(sender)
+            //crawling(sender)
+            //sendQuickReply(sender)
+            continue
+        }
         sendTextMessage(sender, "Message received: " + text.substring(0, 200))
     }
+      
 }
 
 function greetUserText(userId) {
