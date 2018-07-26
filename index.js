@@ -120,6 +120,11 @@ function greetUserText(userId) {
     sendTextMessage(userId, "Welcome " + user.first_name + '!');
 }
 
+function goodmorningUserText(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "Good Morning " + user.first_name + '!');
+}
+
 function verifyRequestSignature(req, res, buf) {
 	var signature = req.headers["x-hub-signature"];
 
@@ -184,13 +189,17 @@ function receivedMessage(event) {
 
 	if (messageText) {
         if (messageText=="hi","hello","hey"){
-        greetUserText(senderID);
+            greetUserText(senderID);
         
+        }
+        else if(messageText=="good morning"){
+            goodmorningUserText(senderID);
+        }
+        else {
+            sendTextMessage(userId, "Message received" );
+        }
+    
     }
-        else{
-        sendTextMessage(userId, "Message received" );
-    }
-}
 
 }
 
