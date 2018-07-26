@@ -196,7 +196,7 @@ function receivedMessage(event) {
         console.log("message: "+messageText)
         console.log("good morning equality : "+(messageText=="good morning") )
         console.log("equality : "+(messageText=="hi"))
-        if (messageText=="hi","hey","hello"){
+        if (messageText=="hi"){
             greetUserText(senderID);
             return;
         }
