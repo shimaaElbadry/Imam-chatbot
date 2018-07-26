@@ -185,13 +185,12 @@ function receivedMessage(event) {
 	if (messageText) {
         if (messageText=="hi","hello","hey"){
         greetUserText(senderID);
-        
     }
         else{
         sendTextMessage(senderID, "Message received: " +messageText.substring(0, 200))
     }
 }
-
+}
 function greetUserText(userId) {
 	let user=userMap.get(userId);
     sendTextMessage(userId, "Welcome" + user.first_name + '!');
