@@ -185,10 +185,10 @@ function receivedMessage(event) {
 	if (messageText) {
         if (messageText=="hi","hello","hey"){
         greetUserText(senderID);
-        return;
+        
     }
         else{
-        sendTextMessage(userId, "Message received: " +messageText.substring(0, 200))
+        sendTextMessage(userId, "Message received" )
     }
 }
 }
