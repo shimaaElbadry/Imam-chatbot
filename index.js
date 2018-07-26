@@ -199,11 +199,11 @@ function receivedMessage(event) {
             goodmorningUserText(senderID);
             return;
         }
-        else {
-            
+        /*else {
+
             let user=userMap.get(userId);
             sendTextMessage(userId, "sorry " + user.first_name + ', i do not know that!');
-        }
+        }*/
     
     }
 
