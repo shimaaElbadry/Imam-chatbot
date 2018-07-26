@@ -206,7 +206,7 @@ function receivedMessage(event) {
         }
         else {
             
-            goodmorningUserText(senderID);
+            unknownUserText(senderID);
             
             // let user=userMap.get(userId);
             // sendTextMessage(userId, "sorry " + user.first_name + ', i do not know that!');
