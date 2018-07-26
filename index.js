@@ -190,10 +190,11 @@ function receivedMessage(event) {
 	if (messageText) {
         if (messageText=="hi","hello","hey"){
             greetUserText(senderID);
-        
+            return;
         }
         else if(messageText=="good morning"){
             goodmorningUserText(senderID);
+            return;
         }
         else {
             sendTextMessage(userId, "Message received" );
