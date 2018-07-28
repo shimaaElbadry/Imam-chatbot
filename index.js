@@ -196,7 +196,7 @@ function receivedMessage(event) {
             helpUserText(senderID);
             return;
         }
-        else if(messageText=="ما هو الحديث النبوى الشريف"||messageText=="ما هو الحديث النبوى"){
+        else if(messageText=="ما هو الحديث النبوى الشريف ؟"|messageText=="ما هو الحديث النبوى"){
             whatIsHadith(senderID);
             return;
         }
