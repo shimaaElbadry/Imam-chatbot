@@ -182,8 +182,9 @@ function receivedMessage(event) {
         console.log("message: "+messageText)
         console.log("good morning equality : "+(messageText=="good morning") )
         console.log("equality : "+(messageText=="hi"))
-        if (messageText=="hi"||messageText=="hello"||messageText=="hey"||
-            messageText=="Hi"||messageText=="Hey"||messageText=="Hello"){
+        if (messageText=="hi"||messageText=="hello"||messageText=="hey"||messageText=="Restart bot"||
+            messageText=="Hi"||messageText=="Hey"||messageText=="Hello"||messageText=="Get Started"||
+            messageText=="مساء الخير"||messageText=="صباح الخير"||messageText=="اهلا"||messageText=="مرحبا"){
             
             greetingText(senderID);
             //greetingwithQuickReply(senderID);
@@ -191,6 +192,10 @@ function receivedMessage(event) {
         }
         else if(messageText=="help"||messageText=="Help"||messageText=="معلومات"||
         messageText=="مساعده"||messageText=="مساعدة"||messageText=="ماهو امام"){
+            helpUserText(senderID);
+            return;
+        }
+        else if(messageText=="ما هو الحديث النبوى الشريف"||messageText=="ما هو الحديث النبوى"){
             helpUserText(senderID);
             return;
         }
@@ -259,18 +264,18 @@ function greetingwithQuickReply(sender) {
 
 function helpUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif.");
+    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif. /n اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى!");
 }
 
 function unknownUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again!');
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again! /n اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى! ');
 }
 
 
 function greetingText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '!');
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '!/n'+"اهلا"+user.first_name );
 }
 
 
