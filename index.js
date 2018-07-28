@@ -273,15 +273,15 @@ function unknownUserText(userId) {
 }
 function whatIsHadith(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again! / اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى! ');
-}
-
-
-function greetingText(userId) {
-	let user=userMap.get(userId);
     sendTextMessage(userId, "الحديث النبوي الشريف هو كل ما قاله النبي محمد -صلى الله عليه وسلم-، أي كل ما ورد عنه من قول أو فعل أو تقرير أو صفة خلقية أو صفة خلقية أو سيرة وردت عنه، سواء كانت قبل البعثة أم بعدها، وقد حُفِظَ الرسول محمد -صلى الله عليه وسلم- من قبل الله عز وجل منذ ولادته وحتى وفاته، فجميع أقوال النبي الكريم وأفعاله وصفاته الخلقية كما خلقها الله سبحانه وتعالى فيه، والصفات الخلقية نابعة من صفاته التي تحلى بها كالصدق والأمانة، والتي يجب أن يقتدي جميع المسلمين به ويتحلون بصفاته.");
     sendTextMessage(userId,"the record of the words, actions, and the silent approval, of the Islamic prophet Muhammad. Within Islam the authority of Ḥadīth as a source for religious law and moral guidance ranks second only to that of the Qur'an (which Muslims hold to be the word of Allah revealed to his messenger Muhammad).")
 }
+
+function greetingText(userId) {
+    let user=userMap.get(userId);
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again! / اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى! ');
+}
+    
 
 
 function sendTextMessage(recipientId, text) {
