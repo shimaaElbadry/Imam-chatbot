@@ -264,13 +264,13 @@ function helpUserText(userId) {
 
 function unknownUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "welcome" + " "+user.first_name + '! ,Sorry i can not understand. Say that again!');
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again!');
 }
 
 
 function greetingText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "welcome" + " "+user.first_name + '!');
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '!');
 }
 
 
