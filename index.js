@@ -259,18 +259,18 @@ function greetingwithQuickReply(sender) {
 
 function helpUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + user.first_name + '!' + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif");
+    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif.");
 }
 
 function unknownUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "welcome" + user.first_name + '! ,Sorry i can not understand. Say that again!');
+    sendTextMessage(userId, "welcome" + " "+user.first_name + '! ,Sorry i can not understand. Say that again!');
 }
 
 
 function greetingText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "welcome" + user.first_name + '!');
+    sendTextMessage(userId, "welcome" + " "+user.first_name + '!');
 }
 
 
