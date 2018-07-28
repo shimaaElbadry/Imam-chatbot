@@ -264,18 +264,18 @@ function greetingwithQuickReply(sender) {
 
 function helpUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif. /n اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى!");
+    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif. /اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى!");
 }
 
 function unknownUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again! /n اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى! ');
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again! / اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى! ');
 }
 
 
 function greetingText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '!/n'+"اهلا"+user.first_name );
+    sendTextMessage(userId, "Welcome/اهلا" + " "+user.first_name);
 }
 
 
