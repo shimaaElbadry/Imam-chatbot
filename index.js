@@ -191,7 +191,8 @@ function receivedMessage(event) {
             return;
         }
         else if(messageText=="help"||messageText=="Help"||messageText=="معلومات"||
-        messageText=="مساعده"||messageText=="مساعدة"||messageText=="ماهو امام"){
+        messageText=="مساعده"||messageText=="مساعدة"||messageText=="ماهو امام"||
+        messageText=="what is imam"){
             helpUserText(senderID);
             return;
         }
@@ -264,7 +265,7 @@ function greetingwithQuickReply(sender) {
 
 function helpUserText(userId) {
 	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif. /اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى!");
+    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif. /امام هو مساعدك لمعرفة ما هو الحديث الشريف.");
 }
 
 function unknownUserText(userId) {
