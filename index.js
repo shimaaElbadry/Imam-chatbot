@@ -280,7 +280,7 @@ function whatIsHadith(userId) {
 
 function greetingText(userId) {
     let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,I am here to help you  know al hadith alsharif. / know al Qouran al karim or al hadith alsharif. /امام هو مساعدك لمعرفة ما هو الحديث الشريف.');
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,I am here to help you know al hadith alsharif./ انا هنا لأساعدك على معرفة ماهو الحديث الشريف.');
 }
     
 
