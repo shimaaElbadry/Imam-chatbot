@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 const pg=require('pg');
-pg.defaults.ssl=true;
 const keyword_extractor = require('keyword-extractor')
 const Crawler = require("js-crawler");
 const cheerio = require('cheerio');
@@ -136,7 +135,7 @@ function verifyRequestSignature(req, res, buf) {
 		}
 	}
 }
-/*
+
 function setSessionAndUser(senderID){
     if (!sessionIds.has(senderID)) {
 		sessionIds.set(senderID, uuid.v1());
@@ -148,7 +147,7 @@ function setSessionAndUser(senderID){
     },senderID);
 }
 }
-*/
+
 function receivedMessage(event) {
 
 	var senderID = event.sender.id;
