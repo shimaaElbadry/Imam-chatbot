@@ -136,7 +136,7 @@ function verifyRequestSignature(req, res, buf) {
 		}
 	}
 }
-
+/*
 function setSessionAndUser(senderID){
     if (!sessionIds.has(senderID)) {
 		sessionIds.set(senderID, uuid.v1());
@@ -148,7 +148,7 @@ function setSessionAndUser(senderID){
     },senderID);
 }
 }
-
+*/
 function receivedMessage(event) {
 
 	var senderID = event.sender.id;
@@ -209,60 +209,6 @@ function receivedMessage(event) {
 
 }
 
-// function greetUserText(userId) {
-// 	let user=userMap.get(userId);
-//     sendTextMessage(userId, "welcome " + user.first_name + '!');
-function greetingwithQuickReply(sender) {
-    var messageData = {
-        recipient: {
-			id: recipientId},
-            message: { 
-                "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "button",
-                    "text":"Hi, Tell me more about your self.. you are?",
-                    "buttons":[
-                                    {
-                                    "type":"postback",
-                                    "title":"Muslim",
-                                    "payload":"Muslim"
-                                    },
-                                    {
-                                    "type":"postback",
-                                    "title":"non Muslim",
-                                    "payload":"non Muslim"
-                                    }
-                              ]
-                            }
-                        }
-                        }
-                    };
-                    request({
-                        uri: 'https://graph.facebook.com/v2.6/me/messages',
-                        qs: {
-                            access_token: config.FB_PAGE_TOKEN
-                        },
-                        method: 'POST',
-                        json: messageData
-                
-                    }, function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            var recipientId = body.recipient_id;
-                            var messageId = body.message_id;
-                
-                            if (messageId) {
-                                console.log("Successfully sent message with id %s to recipient %s",
-                                    messageId, recipientId);
-                            } else {
-                                console.log("Successfully called Send API for recipient %s",
-                                    recipientId);
-                            }
-                        } else {
-                            console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-                        }
-                });        
-    }
 
 function helpUserText(userId) {
 	let user=userMap.get(userId);
@@ -319,9 +265,6 @@ function greetingText(userId) {
     pool.end();
 
 }
-    
-
-
 function sendTextMessage(recipientId, text) {
 	var messageData = {
 		recipient: {
@@ -361,6 +304,65 @@ function callSendAPI(messageData) {
 		}
 });
 }
+
+
+    
+// function greetUserText(userId) {
+// 	let user=userMap.get(userId);
+//     sendTextMessage(userId, "welcome " + user.first_name + '!');
+/*function greetingwithQuickReply(sender) {
+    var messageData = {
+        recipient: {
+			id: recipientId},
+            message: { 
+                "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text":"Hi, Tell me more about your self.. you are?",
+                    "buttons":[
+                                    {
+                                    "type":"postback",
+                                    "title":"Muslim",
+                                    "payload":"Muslim"
+                                    },
+                                    {
+                                    "type":"postback",
+                                    "title":"non Muslim",
+                                    "payload":"non Muslim"
+                                    }
+                              ]
+                            }
+                        }
+                        }
+                    };
+                    request({
+                        uri: 'https://graph.facebook.com/v2.6/me/messages',
+                        qs: {
+                            access_token: config.FB_PAGE_TOKEN
+                        },
+                        method: 'POST',
+                        json: messageData
+                
+                    }, function (error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            var recipientId = body.recipient_id;
+                            var messageId = body.message_id;
+                
+                            if (messageId) {
+                                console.log("Successfully sent message with id %s to recipient %s",
+                                    messageId, recipientId);
+                            } else {
+                                console.log("Successfully called Send API for recipient %s",
+                                    recipientId);
+                            }
+                        } else {
+                            console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+                        }
+                });        
+    }
+*/
+
 
 /*
 function sendQuickReply(recipientId, text, replies, metadata) {
