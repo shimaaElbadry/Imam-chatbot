@@ -29,7 +29,7 @@ module.exports=function(callback,userId){
                     function(err, result) {
                         console.log('query result ' + result);
                         if (err) {
-                            console.log('Query error: ' + err);
+                            console.log('Query error : ' + err);
                         } else {
                             console.log('rows: ' + result.rows.length);
                             if (result.rows.length === 0) {
