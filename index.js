@@ -181,7 +181,7 @@ function receivedMessage(event) {
 	if (messageText) {
         console.log("message: "+messageText)
         console.log("good morning equality : "+(messageText=="good morning") )
-        console.log("equality : "+(messageText=="hi"))
+        console.log("equality: "+(messageText=="hi"))
         if (messageText=="hi"||messageText=="hello"||messageText=="hey"||messageText=="Restart bot"||
             messageText=="Hi"||messageText=="Hey"||messageText=="Hello"||messageText=="Get Started"||
             messageText=="مساء الخير"||messageText=="صباح الخير"||messageText=="اهلا"||messageText=="مرحبا"){
