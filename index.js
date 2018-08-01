@@ -252,7 +252,7 @@ function greetingText(userId) {
 	request({
 		uri: 'https://graph.facebook.com/v2.7/' + userId,
 		qs: {
-			access_token:token
+			access_token:config.FB_PAGE_TOKEN
 		}
 
 	}, function (error, response, body) {
