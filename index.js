@@ -591,7 +591,7 @@ function sendQuickReply(senderID) {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                "text":"Hi, Tell me more about you self.. you are?",
+                "text":"Tell me more about you self.. you are?",
                 "buttons":[
                                 {
                                 "type":"postback",
