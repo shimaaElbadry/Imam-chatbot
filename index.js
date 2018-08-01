@@ -226,6 +226,7 @@ function receivedMessage(event) {
             messageText=="مساء الخير"||messageText=="صباح الخير"||messageText=="اهلا"||messageText=="مرحبا"){
             
             greetingText(senderID);
+            sendQuickReply(senderID)
             //greetingwithQuickReply(senderID);
             return;
         }
@@ -583,7 +584,7 @@ function keywordExtractor(sender,text) {
 */
 
 
-/*
+
 function sendQuickReply(sender) {
     let messageData = {
         "attachment": {
@@ -622,7 +623,7 @@ function sendQuickReply(sender) {
         }
     })
 }
-*/
+
 
 
 
