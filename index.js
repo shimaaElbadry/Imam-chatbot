@@ -632,9 +632,9 @@ function receivedPostback(event) {
 	// The 'payload' param is a developer-defined field which is set in a postback 
 	// button for Structured Messages. 
 	var payload = event.postback.payload;
-    var payloadText=payload.text
-	if(payloadText) {
-        if (payloadText=="Muslim"){
+    
+	if(payload) {
+        if (payload=="Muslim"){
             sendTextMessage(userId,"great")
         }
         else{sendTextMessage(userId,"ok")}
