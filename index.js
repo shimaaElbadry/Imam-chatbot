@@ -13,7 +13,6 @@ const crypto = require('crypto');
 const uuid = require('uuid');
 
 
-
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
 	throw new Error('missing FB_PAGE_TOKEN');
@@ -51,7 +50,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 const sessionIds = new Map();
-const userMap=new Map;
 
 // Index route
 app.get('/', function (req, res) {
@@ -89,7 +87,7 @@ app.post('/webhook/', function (req, res) {
 			var pageID = pageEntry.id;
 			var timeOfEvent = pageEntry.time;
 
-			// Iterate over each messaging event
+			//Iterate over each messaging event
 			pageEntry.messaging.forEach(function (messagingEvent) {
 				if (messagingEvent.optin) {
 					receivedAuthentication(messagingEvent);
@@ -104,7 +102,7 @@ app.post('/webhook/', function (req, res) {
 				} else if (messagingEvent.account_linking) {
 					receivedAccountLink(messagingEvent);
 				} else {
-					console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+					console.log("Webhook received an unknown messagingEvent: ", messagingEvent);
 				}
 			});
 		});
@@ -114,6 +112,7 @@ app.post('/webhook/', function (req, res) {
 		res.sendStatus(200);
 	}
 });
+
 
 
 function verifyRequestSignature(req, res, buf) {
@@ -135,292 +134,6 @@ function verifyRequestSignature(req, res, buf) {
 		}
 	}
 }
-
-function setSessionAndUser(senderID){
-    if (!sessionIds.has(senderID)) {
-		sessionIds.set(senderID, uuid.v1());
-    }
-    if (!userMap.has(senderID)){
-        userData(function(user){
-            userMap.set(senderID,user);
-
-    },senderID);
-}
-}
-
-function receivedMessage(event) {
-
-	var senderID = event.sender.id;
-	var recipientID = event.recipient.id;
-	var timeOfMessage = event.timestamp;
-	var message = event.message;
-
-	setSessionAndUser(senderID);
-	//console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
-	//console.log(JSON.stringify(message));
-
-	var isEcho = message.is_echo;
-	var messageId = message.mid;
-	var appId = message.app_id;
-	var metadata = message.metadata;
-
-	// You may get a text or attachment but not both
-	var messageText = message.text;
-	var messageAttachments = message.attachments;
-	var quickReply = message.quick_reply;
-
-	if (isEcho) {
-		handleEcho(messageId, appId, metadata);
-		return;
-	} else if (quickReply) {
-		handleQuickReply(senderID, quickReply, messageId);
-		return;
-	}
-
-
-	if (messageText) {
-        console.log("message: "+messageText)
-        console.log("good morning equality : "+(messageText=="good morning") )
-        console.log("equality: "+(messageText=="hi"))
-        if (messageText=="hi"||messageText=="hello"||messageText=="hey"||messageText=="Restart bot"||
-            messageText=="Hi"||messageText=="Hey"||messageText=="Hello"||messageText=="Get Started"||
-            messageText=="مساء الخير"||messageText=="صباح الخير"||messageText=="اهلا"||messageText=="مرحبا"){
-            
-            greetingText(senderID);
-            //greetingwithQuickReply(senderID);
-            return;
-        }
-        else if(messageText=="help"||messageText=="Help"||messageText=="معلومات"||
-        messageText=="مساعده"||messageText=="مساعدة"||messageText=="ماهو امام"||
-        messageText=="what is imam"){
-            helpUserText(senderID);
-            return;
-        }
-        else if(messageText=="ما هو الحديث النبوى الشريف ؟"|messageText=="ما هو الحديث النبوى"){
-            whatIsHadith(senderID);
-            return;
-        }
-        else {
-            unknownUserText(senderID); 
-        }
-    
-    }
-
-}
-
-
-function helpUserText(userId) {
-	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif. /امام هو مساعدك لمعرفة ما هو الحديث الشريف.");
-}
-
-function unknownUserText(userId) {
-	let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again! / اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى! ');
-}
-function whatIsHadith(userId) {
-	let user=userMap.get(userId);
-    sendTextMessage(userId, "الحديث النبوي الشريف هو كل ما قاله النبي محمد -صلى الله عليه وسلم-، أي كل ما ورد عنه من قول أو فعل أو تقرير أو صفة خلقية أو صفة خلقية أو سيرة وردت عنه، سواء كانت قبل البعثة أم بعدها، وقد حُفِظَ الرسول محمد -صلى الله عليه وسلم- من قبل الله عز وجل منذ ولادته وحتى وفاته، فجميع أقوال النبي الكريم وأفعاله وصفاته الخلقية كما خلقها الله سبحانه وتعالى فيه، والصفات الخلقية نابعة من صفاته التي تحلى بها كالصدق والأمانة، والتي يجب أن يقتدي جميع المسلمين به ويتحلون بصفاته.");
-    sendTextMessage(userId,"the record of the words, actions, and the silent approval, of the Islamic prophet Muhammad. Within Islam the authority of Ḥadīth as a source for religious law and moral guidance ranks second only to that of the Qur'an (which Muslims hold to be the word of Allah revealed to his messenger Muhammad).")
-}
-
-function greetingText(userId) {
-    let user=userMap.get(userId);
-    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,I am here to help you know al hadith alsharif./ انا هنا لأساعدك على معرفة ماهو الحديث الشريف.');
-
-    var pool = new pg.Pool(config.PG_CONFIG);
-    pool.connect(function(err, client, done) {
-        if (err) {
-            return console.error('Error acquiring client', err.stack);
-        }
-        var rows = [];
-        console.log('fetching user');
-        client.query(`SELECT id FROM users WHERE fb_id='${userId}' LIMIT 1`,
-            function(err, result) {
-                console.log('query result ' + result);
-                if (err) {
-                    console.log('Query error: ' + err);
-                } else {
-                    console.log('rows: ' + result.rows.length);
-                    if (result.rows.length === 0) {
-                        let sql = 'INSERT INTO users (fb_id, first_name, last_name, profile_pic, ' +
-                            'locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6, $7)';
-                        console.log('sql: ' + sql);
-                        client.query(sql,
-                            [
-                                userId,
-                                user.first_name,
-                                user.last_name,
-                                user.profile_pic,
-                                user.locale,
-                                user.timezone,
-                                user.gender
-                            ]);
-                    }
-                }
-            });
-
-    });
-    pool.end();
-
-}
-function sendTextMessage(recipientId, text) {
-	var messageData = {
-		recipient: {
-			id: recipientId
-		},
-		message: {
-			text: text
-		}
-	}
-	callSendAPI(messageData);
-}
-
-
-function callSendAPI(messageData) {
-	request({
-		uri: 'https://graph.facebook.com/v2.6/me/messages',
-		qs: {
-			access_token: config.FB_PAGE_TOKEN
-		},
-		method: 'POST',
-		json: messageData
-
-	}, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var recipientId = body.recipient_id;
-			var messageId = body.message_id;
-
-			if (messageId) {
-				console.log("Successfully sent message with id %s to recipient %s",
-					messageId, recipientId);
-			} else {
-				console.log("Successfully called Send API for recipient %s",
-					recipientId);
-			}
-		} else {
-			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-		}
-});
-}
-
-
-    
-// function greetUserText(userId) {
-// 	let user=userMap.get(userId);
-//     sendTextMessage(userId, "welcome " + user.first_name + '!');
-/*function greetingwithQuickReply(sender) {
-    var messageData = {
-        recipient: {
-			id: recipientId},
-            message: { 
-                "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "button",
-                    "text":"Hi, Tell me more about your self.. you are?",
-                    "buttons":[
-                                    {
-                                    "type":"postback",
-                                    "title":"Muslim",
-                                    "payload":"Muslim"
-                                    },
-                                    {
-                                    "type":"postback",
-                                    "title":"non Muslim",
-                                    "payload":"non Muslim"
-                                    }
-                              ]
-                            }
-                        }
-                        }
-                    };
-                    request({
-                        uri: 'https://graph.facebook.com/v2.6/me/messages',
-                        qs: {
-                            access_token: config.FB_PAGE_TOKEN
-                        },
-                        method: 'POST',
-                        json: messageData
-                
-                    }, function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            var recipientId = body.recipient_id;
-                            var messageId = body.message_id;
-                
-                            if (messageId) {
-                                console.log("Successfully sent message with id %s to recipient %s",
-                                    messageId, recipientId);
-                            } else {
-                                console.log("Successfully called Send API for recipient %s",
-                                    recipientId);
-                            }
-                        } else {
-                            console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-                        }
-                });        
-    }
-*/
-
-
-/*
-function sendQuickReply(recipientId, text, replies, metadata) {
-	var messageData = {
-		recipient: {
-			id: recipientId
-		},
-		message: {
-			text: text,
-			metadata: isDefined(metadata)?metadata:'',
-			quick_replies: replies
-		}
-	};
-
-	callSendAPI(messageData);
-}
-*/
-/*
-function handleEcho(messageId, appId, metadata) {
-	// Just logging message echoes to console
-	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
-}
-function handleMessage(message, sender) {
-	switch (message.type) {
-		case 0: //text
-			sendTextMessage(sender, message.speech);
-			break;
-		case 2: //quick replies
-			let replies = [];
-			for (var b = 0; b < message.replies.length; b++) {
-				let reply =
-				{
-					"content_type": "text",
-					"title": message.replies[b],
-					"payload": message.replies[b]
-				}
-				replies.push(reply);
-			}
-			sendQuickReply(sender, message.title, replies);
-			break;
-		case 3: //image
-			sendImageMessage(sender, message.imageUrl);
-			break;
-		case 4:
-			// custom payload
-			var messageData = {
-				recipient: {
-					id: sender
-				},
-				message: message.payload.facebook
-
-			};
-
-			callSendAPI(messageData);
-
-			break;
-	}
-}
-*/
 //old & good post 
 /*
 app.post('/webhook/', function (req, res) {
@@ -472,6 +185,220 @@ app.post('/webhook/', function (req, res) {
   })
 
 */
+
+function receivedMessage(event) {
+
+	var senderID = event.sender.id;
+	var recipientID = event.recipient.id;
+	var timeOfMessage = event.timestamp;
+	var message = event.message;
+
+	if (!sessionIds.has(senderID)) {
+		sessionIds.set(senderID, uuid.v1());
+	}
+	//console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
+	//console.log(JSON.stringify(message));
+
+	var isEcho = message.is_echo;
+	var messageId = message.mid;
+	var appId = message.app_id;
+	var metadata = message.metadata;
+
+	// You may get a text or attachment but not both
+	var messageText = message.text;
+	var messageAttachments = message.attachments;
+	var quickReply = message.quick_reply;
+
+	if (isEcho) {
+		handleEcho(messageId, appId, metadata);
+		return;
+	} else if (quickReply) {
+		handleQuickReply(senderID, quickReply, messageId);
+		return;
+	}
+
+
+	if (messageText) {
+        console.log("good morning equality : "+(messageText=="good morning") )
+        console.log("equality : "+(messageText=="hi"))
+        if (messageText=="hi"||messageText=="hello"||messageText=="hey"||messageText=="Restart bot"||
+            messageText=="Hi"||messageText=="Hey"||messageText=="Hello"||messageText=="Get Started"||
+            messageText=="مساء الخير"||messageText=="صباح الخير"||messageText=="اهلا"||messageText=="مرحبا"){
+            
+            greetingText(senderID);
+            //greetingwithQuickReply(senderID);
+            return;
+        }
+        else if(messageText=="help"||messageText=="Help"||messageText=="معلومات"||
+        messageText=="مساعده"||messageText=="مساعدة"||messageText=="ماهو امام"||
+        messageText=="what is imam"){
+            helpUserText(senderID);
+            return;
+        }
+        else if(messageText=="ما هو الحديث النبوى الشريف ؟"|messageText=="ما هو الحديث النبوى"){
+            whatIsHadith(senderID);
+            return;
+        }
+        else {
+            unknownUserText(senderID); 
+        }
+        
+		
+	}
+}
+
+function greetingText(userId) {
+	//first read user firstname
+	request({
+		uri: 'https://graph.facebook.com/v2.7/' + userId,
+		qs: {
+			access_token:token
+		}
+
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+
+            var user = JSON.parse(body);
+            console.log("getUserData"+user)
+            if (user.first_name){
+                
+                sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,I am here to help you know al hadith alsharif./ انا هنا لأساعدك على معرفة ماهو الحديث الشريف.');
+
+                var pool = new pg.Pool(config.PG_CONFIG);
+                pool.connect(function(err, client, done) {
+                    if (err) {
+                        return console.error('Error acquiring client', err.stack);
+                    }
+                    var rows = [];
+                    console.log('fetching user');
+                    client.query(`SELECT id FROM users WHERE fb_id='${userId}' LIMIT 1`,
+                        function(err, result) {
+                            console.log('query result ' + result);
+                            if (err) {
+                                console.log('Query error: ' + err);
+                            } else {
+                                console.log('rows: ' + result.rows.length);
+                                if (result.rows.length === 0) {
+                                    let sql = 'INSERT INTO users (fb_id, first_name, last_name, profile_pic, ' +
+                                        'locale, timezone, gender) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+                                    console.log('sql: ' + sql);
+                                    client.query(sql,
+                                        [
+                                            userId,
+                                            user.first_name,
+                                            user.last_name,
+                                            user.profile_pic,
+                                            user.locale,
+                                            user.timezone,
+                                            user.gender
+                                        ]);
+                                }
+                            }
+                        });
+
+                                });
+                        pool.end();
+		
+                    }  }
+}
+);
+}
+
+function helpUserText(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "Welcome" + " "+ user.first_name + '!'+ " " + "Imam is your assistant to hep you know al Qouran al karim or al hadith alsharif. /امام هو مساعدك لمعرفة ما هو الحديث الشريف.");
+}
+
+function unknownUserText(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "Welcome" + " "+user.first_name + '! ,Sorry i can not understand. Please,Say that again! / اسف لم اتمكن من فهم ذلك، من فضلك كرر ذلك مرة اخرى! ');
+}
+function whatIsHadith(userId) {
+	let user=userMap.get(userId);
+    sendTextMessage(userId, "الحديث النبوي الشريف هو كل ما قاله النبي محمد -صلى الله عليه وسلم-، أي كل ما ورد عنه من قول أو فعل أو تقرير أو صفة خلقية أو صفة خلقية أو سيرة وردت عنه، سواء كانت قبل البعثة أم بعدها، وقد حُفِظَ الرسول محمد -صلى الله عليه وسلم- من قبل الله عز وجل منذ ولادته وحتى وفاته، فجميع أقوال النبي الكريم وأفعاله وصفاته الخلقية كما خلقها الله سبحانه وتعالى فيه، والصفات الخلقية نابعة من صفاته التي تحلى بها كالصدق والأمانة، والتي يجب أن يقتدي جميع المسلمين به ويتحلون بصفاته.");
+    sendTextMessage(userId,"the record of the words, actions, and the silent approval, of the Islamic prophet Muhammad. Within Islam the authority of Ḥadīth as a source for religious law and moral guidance ranks second only to that of the Qur'an (which Muslims hold to be the word of Allah revealed to his messenger Muhammad).")
+}
+
+function handleEcho(messageId, appId, metadata) {
+	// Just logging message echoes to console
+	console.log("Received echo for message %s and app %d with metadata %s", messageId, appId, metadata);
+}
+function handleMessage(message, sender) {
+	switch (message.type) {
+		case 0: //text
+			sendTextMessage(sender, message.speech);
+			break;
+		case 2: //quick replies
+			let replies = [];
+			for (var b = 0; b < message.replies.length; b++) {
+				let reply =
+				{
+					"content_type": "text",
+					"title": message.replies[b],
+					"payload": message.replies[b]
+				}
+				replies.push(reply);
+			}
+			sendQuickReply(sender, message.title, replies);
+			break;
+		case 3: //image
+			sendImageMessage(sender, message.imageUrl);
+			break;
+		case 4:
+			// custom payload
+			var messageData = {
+				recipient: {
+					id: sender
+				},
+				message: message.payload.facebook
+
+			};
+
+			callSendAPI(messageData);
+
+			break;
+	}
+}
+
+function sendTextMessage(recipientId, text) {
+    var messageData = {
+		recipient: {
+			id: recipientId
+		},
+		message: {
+			text: text
+    	}
+    }
+        callSendAPI(messageData);
+
+}
+function callSendAPI(messageData) {
+	request({
+		url: 'https://graph.facebook.com/v2.6/me/messages',
+		qs: {
+			access_token: config.FB_PAGE_TOKEN
+		},
+		method: 'POST',
+		json: messageData
+
+	}, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var recipientId = body.recipient_id;
+			var messageId = body.message_id;
+
+			if (messageId) {
+				console.log("Successfully sent message with id %s to recipient %s",
+					messageId, recipientId);
+			} else {
+				console.log("Successfully called Send API for recipient %s",
+					recipientId);
+			}
+		} else {
+			console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+		}
+	});
+}
+
 //crawling film name
 /*
 function crawling(sender){
@@ -507,30 +434,9 @@ function crawling(sender){
 )
 
 }
+*/
 
-
-
-//uncpmpelete sector 
-function sendToBC( text) {
-    
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message:messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-
-}
-
+/*
 
 
 function weatherApi(sender,text) {
@@ -564,7 +470,7 @@ function weatherApi(sender,text) {
 //city=cairo&country=egypt&method=2&month=04&year=1437
 
 function prayinTimesApi(sender,text) {
-    console.log("*****************in function***************")
+    console.log("***************in function***************")
     request({
         url: 'http://api.aladhan.com/v1/hijriCalendarByCity',
         qs: {city:text,
@@ -635,7 +541,7 @@ function sendQuickReply(sender) {
             "type": "template",
             "payload": {
                 "template_type": "button",
-                "text":"Hi, Tell me more about your self.. you are?",
+                "text":"Hi, Tell me more about you self.. you are?",
                 "buttons":[
                                 {
                                 "type":"postback",
