@@ -585,7 +585,7 @@ function keywordExtractor(sender,text) {
 
 
 
-function sendQuickReply(sender) {
+function sendQuickReply(senderID) {
     let messageData = {
         "attachment": {
             "type": "template",
@@ -609,10 +609,10 @@ function sendQuickReply(sender) {
                     }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
+        qs: {access_token:config.FB_PAGE_TOKEN},
         method: 'POST',
         json: {
-            recipient: {id:sender},
+            recipient: {id:senderID},
             message: messageData,
         }
     }, function(error, response, body) {
