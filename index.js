@@ -11,7 +11,7 @@ const cheerio = require('cheerio');
 const URL = require('url-parse');
 const crypto = require('crypto');
 const uuid = require('uuid');
-const fetch = require('node-fetch');
+//const fetch = require('node-fetch');
 
 
 // Messenger API parameters

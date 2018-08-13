@@ -32,6 +32,7 @@
     "express": "^4.16.3",
     "js-crawler": "^0.3.21",
     "keyword-extractor": "0.0.15",
+    "node-fetch": "^2.2.0",
     "pg": "7.4.3",
     "request": "^2.87.0",
     "url-parse": "^1.4.1"
