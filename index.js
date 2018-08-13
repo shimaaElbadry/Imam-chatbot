@@ -619,8 +619,8 @@ function sendQuickReply(senderID) {
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending messages: ', error)
-        } else {
-            receivedPostback(event)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
         }
     })
 }
