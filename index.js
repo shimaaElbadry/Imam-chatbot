@@ -625,6 +625,53 @@ function sendQuickReply(senderID) {
     })
 }
 
+
+function sendQuickReplyToMuslim(senderID) {
+    let messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "button",
+                "text":"Great! How can i help you?",
+                "buttons":[
+                    {
+                        "type":"postback",
+                        "title":"Hadith Authinticity",
+                        "payload":"hadith"
+                        },
+                        {
+                        "type":"postback",
+                        "title":"Quraan Tafseer",
+                        "payload":"quraan"
+                        },
+                        {
+                        "type":"postback",
+                        "title":"Praings timing",
+                        "payload":"pray"
+                        }
+                          ]
+                        }
+                    }
+                    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:config.FB_PAGE_TOKEN},
+        method: 'POST',
+        json: {
+            recipient: {id:senderID},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
+
 function receivedPostback(event) {
 	var senderID = event.sender.id;
 	var recipientID = event.recipient.id;
@@ -651,49 +698,6 @@ function receivedPostback(event) {
 
 
 
-function sendQuickReplyToMuslim(sender) {
-    let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "button",
-                "text":"Great! How can i help you?",
-                "buttons":[
-                                {
-                                "type":"postback",
-                                "title":"Hadith Authinticity",
-                                "payload":"hadith"
-                                },
-                                {
-                                "type":"postback",
-                                "title":"Quraan Tafseer",
-                                "payload":"quraan"
-                                },
-                                {
-                                "type":"postback",
-                                "title":"Praings timing",
-                                "payload":"pray"
-                                }
-                        ]
-                        }
-                    }
-                    }
-request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token:config.FB_PAGE_TOKEN},
-    method: 'POST',
-    json: {
-        recipient: {id:senderID},
-        message: messageData,
-    }
-}, function(error, response, body) {
-    if (error) {
-        console.log('Error sending messages: ', error)
-    } else if (response.body.error) {
-        console.log('Error: ', response.body.error)
-    }
-})
-}
 
 /*
 function sendGenericMessagetToNonNuslim(sender) {
