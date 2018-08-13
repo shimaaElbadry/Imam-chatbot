@@ -692,6 +692,7 @@ request({
         console.log('Error: ', response.body.error)
     }
 })
+}
 
 /*
 function sendGenericMessagetToNonNuslim(sender) {
@@ -728,6 +729,4 @@ function sendGenericMessagetToNonNuslim(sender) {
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
         }
-    })
-}
-*/
+    })}*/
