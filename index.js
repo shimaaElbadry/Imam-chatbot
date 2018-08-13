@@ -227,7 +227,7 @@ function receivedMessage(event) {
             messageText=="مساء الخير"||messageText=="صباح الخير"||messageText=="اهلا"||messageText=="مرحبا"){
             
             greetingText(senderID);
-            sendQuickReply(senderID)
+            sendQuickReply(senderID);
             //greetingwithQuickReply(senderID);
             return;
         }
@@ -636,9 +636,10 @@ function receivedPostback(event) {
     
 	if(payload) {
         if (payload=="Muslim"){
-            sendQuickReplyToMuslim(senderID)
+            sendQuickReplyToMuslim(senderID);
         }
-        else{sendTextMessage(senderID,"ok")}
+        else{sendTextMessage(senderID,"ok");
+        }
 		
 	}
 
