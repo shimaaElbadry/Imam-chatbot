@@ -544,7 +544,7 @@ function prayinTimesApi(senderID,text) {
                     sendTextMessage(senderID,reply);
                 }else{
                     console.log("*****************don't have weather***************")
-                    sendTextMessage(sender,"no weather available for this city");
+                    sendTextMessage(senderID,"no weather available for this city");
                    
                 }
         
