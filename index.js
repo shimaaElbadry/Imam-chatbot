@@ -685,6 +685,10 @@ function receivedPostback(event) {
         if (payload=="Muslim"){
             sendQuickReplyToMuslim(senderID);
         }
+        else if (payload=="non Muslim"){
+            sendGenericMessagetToNonNuslim(senderID);
+
+        }
         else{sendTextMessage(senderID,"ok");
         }
 		
@@ -699,8 +703,8 @@ function receivedPostback(event) {
 
 
 
-/*
-function sendGenericMessagetToNonNuslim(sender) {
+
+function sendGenericMessagetToNonNuslim(senderID) {
     let messageData = {
         "attachment": {
             "type": "template",
@@ -722,10 +726,10 @@ function sendGenericMessagetToNonNuslim(sender) {
     }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
+        qs: {access_token:config.FB_PAGE_TOKEN},
         method: 'POST',
         json: {
-            recipient: {id:sender},
+            recipient: {id:senderID},
             message: messageData,
         }
     }, function(error, response, body) {
@@ -734,4 +738,4 @@ function sendGenericMessagetToNonNuslim(sender) {
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
         }
-    })}*/
+    })}
