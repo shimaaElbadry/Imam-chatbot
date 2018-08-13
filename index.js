@@ -517,14 +517,16 @@ function weatherApi(sender,text) {
     })
 
 }
+*/
+
 
 //city=cairo&country=egypt&method=2&month=04&year=1437
 
-function prayinTimesApi(sender,text) {
+function prayinTimesApi(senderID,text) {
     console.log("***************in function***************")
     request({
         url: 'http://api.aladhan.com/v1/hijriCalendarByCity',
-        qs: {city:text,
+        qs: {city:"Cairo",
         country:"egypt",
         method:"2",
         month:"04",
@@ -538,8 +540,8 @@ function prayinTimesApi(sender,text) {
                 console.log(output)
                 if(output.hasOwnProperty("data")){
                     console.log("*****************have weather***************")
-                    let reply=`${output["data"][0]["timings"]["Fajr"]}`;
-                    sendTextMessage(sender,reply);
+                    let reply=`${output["data"][0]["timings"][text]}`;
+                    sendTextMessage(senderID,reply);
                 }else{
                     console.log("*****************don't have weather***************")
                     sendTextMessage(sender,"no weather available for this city");
@@ -551,7 +553,7 @@ function prayinTimesApi(sender,text) {
 
 }
 
-
+/*
 function keywordExtractor(sender,text) {
     console.log("///////////////in function////////////")
     console.log("&&&&&&&&&&&afer var&&&&&&&&&&&&&&&&&&&&")
@@ -671,6 +673,61 @@ function sendQuickReplyToMuslim(senderID) {
 }
 
 
+function sendQuickReplyTPrayingTime(senderID) {
+    let messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "button",
+                "text":"For what prayer?",
+                "buttons":[
+                    {
+                        "type":"postback",
+                        "title":"Fajr",
+                        "payload":"Fajr"
+                        },
+                        {
+                        "type":"postback",
+                        "title":"Dhuhr",
+                        "payload":"Dhuhr"
+                        },
+                        {
+                        "type":"postback",
+                        "title":"Asr",
+                        "payload":"Asr"
+                        },
+                        {
+                        "type":"postback",
+                        "title":"Maghrib",
+                        "payload":"Maghrib"
+                        },
+                        {
+                        "type":"postback",
+                        "title":"Isha",
+                        "payload":"Isha"
+                        }
+                          ]
+                        }
+                    }
+                    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:config.FB_PAGE_TOKEN},
+        method: 'POST',
+        json: {
+            recipient: {id:senderID},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
 
 function receivedPostback(event) {
 	var senderID = event.sender.id;
@@ -687,7 +744,30 @@ function receivedPostback(event) {
         }
         else if (payload=="non Muslim"){
             sendGenericMessagetToNonNuslim(senderID);
-
+        }
+        else if (payload=="hadith"){
+            sendGenericMessagetToNonNuslim(senderID);
+        }
+        else if (payload=="quraan"){
+            sendGenericMessagetToNonNuslim(senderID);
+        }
+        else if (payload=="pray"){
+            sendQuickReplyTPrayingTime(senderID);
+        }
+        else if (payload=="Fajr"){
+            prayinTimesApi(senderID,"Fajr");
+        }
+        else if (payload=="Dhuhr"){
+            prayinTimesApi(senderID,"Dhuhr");
+        }
+        else if (payload=="Asr"){
+            prayinTimesApi(senderID,"Asr");
+        }
+        else if (payload=="Maghrib"){
+            prayinTimesApi(senderID,"Maghrib");
+        }
+        else if (payload=="Isha"){
+            prayinTimesApi(senderID,"Isha");
         }
         else{sendTextMessage(senderID,"ok");
         }
