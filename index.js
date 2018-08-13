@@ -11,6 +11,7 @@ const cheerio = require('cheerio');
 const URL = require('url-parse');
 const crypto = require('crypto');
 const uuid = require('uuid');
+const fetch = require('node-fetch');
 
 
 // Messenger API parameters
@@ -618,8 +619,8 @@ function sendQuickReply(senderID) {
     }, function(error, response, body) {
         if (error) {
             console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
+        } else {
+            receivedPostback(event)
         }
     })
 }
