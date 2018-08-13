@@ -636,7 +636,7 @@ function receivedPostback(event) {
     
 	if(payload) {
         if (payload=="Muslim"){
-            sendTextMessage(senderID,"great")
+            sendQuickReplyToMuslim(senderID)
         }
         else{sendTextMessage(senderID,"ok")}
 		
@@ -649,7 +649,7 @@ function receivedPostback(event) {
 
 
 
-/*
+
 function sendQuickReplyToMuslim(sender) {
     let messageData = {
         "attachment": {
