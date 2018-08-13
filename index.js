@@ -636,7 +636,7 @@ function receivedPostback(event) {
     
 	if(payload) {
         if (payload=="Muslim"){
-            sendTextMessage(senderId,"great")
+            sendTextMessage(senderID,"great")
         }
         else{sendTextMessage(senderID,"ok")}
 		
