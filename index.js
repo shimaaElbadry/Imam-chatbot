@@ -780,10 +780,6 @@ function receivedPostback(event) {
 }
 
 
-
-
-
-
 function sendGenericMessagetToNonNuslim(senderID) {
     let messageData = {
         "attachment": {
