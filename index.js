@@ -814,4 +814,6 @@ function sendGenericMessagetToNonNuslim(senderID) {
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
         }
-    })}
+    }
+)
+}
